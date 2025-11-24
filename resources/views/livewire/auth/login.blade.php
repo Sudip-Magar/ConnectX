@@ -9,25 +9,23 @@
         </div>
 
         <!-- Login Form -->
-        <form method="POST" action="{{ route('login') }}" class="space-y-5">
-            @csrf
-
+        <form wire:submit='userLogin' class="space-y-5">
             <div>
                 <label class="text-white">Email</label>
-                <input type="email" name="email" required
+                <input type="email" wire:model='email' required
                     class="mt-2 w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-white/60 border border-white/30 focus:ring-2 focus:ring-white/50 focus:outline-none"
                     placeholder="Enter your email">
             </div>
 
             <div>
                 <label class="text-white">Password</label>
-                <input type="password" name="password" required
+                <input type="password" wire:model="password" required
                     class="mt-2 w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-white/60 border border-white/30 focus:ring-2 focus:ring-white/50 focus:outline-none"
                     placeholder="••••••••">
             </div>
 
             <button
-                class="w-full py-3 rounded-xl bg-white text-indigo-700 font-bold text-lg shadow-lg hover:bg-gray-200 transition">
+                class="cursor-pointer w-full py-3 rounded-xl bg-white text-indigo-700 font-bold text-lg shadow-lg hover:bg-gray-200 transition">
                 Login
             </button>
         </form>
