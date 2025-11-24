@@ -18,6 +18,13 @@ class Register extends Component
     use WithFileUploads;
     public $name, $username, $email, $password, $password_confirmation, $profile_picture;
 
+    public function mount()
+    {
+        if (Auth::guard('web')->check()) {
+            session()->flash('error', 'You are logged in. Please logged out first');
+            return redirect()->route('home');
+        }
+    }
     public function registerUser()
     {
         $validation = $this->validate([
