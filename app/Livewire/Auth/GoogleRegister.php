@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -18,13 +19,14 @@ class GoogleRegister extends Component
     // For new users
     public $username;
     public $password;
+    public $image;
     public $password_confirmation;
 
     public $isNewUser = false;
 
     public function mount()
     {
-        if(Auth::guard('web')->check()){
+        if (Auth::guard('web')->check()) {
             session()->flash('error', 'You are logged in. Please logged out first');
             return redirect()->route('home');
         }
@@ -33,6 +35,7 @@ class GoogleRegister extends Component
         $this->google_id = $google->id;
         $this->email = $google->email;
         $this->name = $google->name;
+        $this->image = $google->avatar;
 
         // Check if user exists
         $existing = User::where('google_id', $google->id)->first();
@@ -43,8 +46,8 @@ class GoogleRegister extends Component
             return redirect()->route('home');
         }
 
-        if(User::where('email', $this->email)->exists()){
-            session()->flash('error','This email already exists. Please log in.');
+        if (User::where('email', $this->email)->exists()) {
+            session()->flash('error', 'This email already exists. Please log in.');
             return redirect()->route('login');
         }
 
@@ -55,7 +58,7 @@ class GoogleRegister extends Component
 
     public function register()
     {
-        $this->validate([
+        $validation = $this->validate([
             'email' => 'required|email|unique:users,email',
             'username' => 'required|min:3|max:20|unique:users,username',
             'password' => 'required|min:6|confirmed',
@@ -69,14 +72,19 @@ class GoogleRegister extends Component
             'password.min' => 'Password must be at least 6 characters.',
             'password.confirmed' => 'Passwords do not match.',
         ]);
+        $validation['name'] = $this->name;
+        $validation['email'] = $this->email;
+        $validation['password'] = Hash::make($this->password);
+        $validation['google_id'] = $this->google_id;
+        if ($this->image) {
+            $imageContents = file_get_contents($this->image); // download the image
+            $imageName = 'user_' . time() . '.jpg'; // unique filename
+            Storage::disk('public')->put('users/' . $imageName, $imageContents);
 
-        $user = User::create([
-            'name' => $this->name,
-            'username' => $this->username,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-            'google_id' => $this->google_id,
-        ]);
+            $validation['profile_picture'] = 'users/' . $imageName;
+        }
+
+        $user = User::create($validation);
 
         Auth::login($user);
         return redirect()->route('home');
