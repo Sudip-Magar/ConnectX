@@ -16,7 +16,8 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_picture',
-        'bio'
+        'bio',
+        'google_id'
     ];
 
     protected $hidden = [
@@ -24,7 +25,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Posts by this user
+    // // Posts by this user
+    // public static function create(array $validation)
+    // {
+    // }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
