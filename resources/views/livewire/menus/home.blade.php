@@ -1,5 +1,5 @@
 <div>
     @include('common.message')
-    {{ $user->name }}
-    {{ $user->username }}
+    {{-- {{ $user->name }}
+    {{ $user->username }} --}}
 </div>

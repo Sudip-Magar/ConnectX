@@ -27,7 +27,7 @@
                     @error('password') <p class="text-red-400">{{ $message }}</p> @enderror
                 </div>
 
-                <button class="w-full py-3 rounded-xl bg-white text-indigo-700 font-bold text-lg shadow-lg">
+                <button class="cursor-pointer w-full py-3 rounded-xl bg-white text-indigo-700 font-bold text-lg shadow-lg">
                     Create Account
                 </button>
 
