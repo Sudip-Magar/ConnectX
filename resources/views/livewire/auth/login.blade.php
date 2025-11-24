@@ -1,4 +1,5 @@
 <div class="min-h-screen bg-linear-to-br from-blue-500 via-purple-600 to-indigo-700 flex items-center justify-center">
+    @include('common.message')
     <div class="backdrop-blur-xl bg-white/10 p-10 rounded-3xl shadow-2xl w-full max-w-md border border-white/20">
 
         <!-- Logo -->
