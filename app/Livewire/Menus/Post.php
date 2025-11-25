@@ -5,6 +5,7 @@ namespace App\Livewire\Menus;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Media;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,6 +14,7 @@ use App\Models\Post as modelPost;
 
 class Post extends Component
 {
+    use WithFileUploads;
     use WithFileUploads;
     public $images, $content, $comment = [];
 
@@ -45,19 +47,59 @@ class Post extends Component
     {
         DB::beginTransaction();
         try {
-            Comment::create([
+            $comment = Comment::create([
                 'user_id' => Auth::guard('web')->user()->id,
                 'post_id' => $id,
                 'content' => $this->comment[$id],
             ]);
+
+            Notification::create([
+                'user_id' => $comment->user_id,
+                'type' => 'comment',
+                'data' => [
+                    'post_id' => $id,
+                    'comment_id' => $comment->id,
+                    'commented_by' => Auth::guard('web')->user()->id
+                ],
+            ]);
+
             DB::commit();
-            $this->comment[$id]='';
+            $this->comment[$id] = '';
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', 'something went wrong');
         }
     }
 
+    public function likePost($id)
+    {
+        DB::beginTransaction();
+        try {
+            $userId = Auth::guard('web')->user()->id;
+            $isLikeExist = Like::where('post_id', $id)->where('user_id', $userId)->first();
+            if ($isLikeExist) {
+                $isLikeExist->delete();
+                DB::commit();
+            } else {
+                $like = Like::create([
+                    'user_id' => $userId,
+                    'post_id' => $id,
+                ]);
+                Notification::create([
+                    'user_id' => $like->user_id,
+                    'type' => 'like',
+                    'data' => [
+                        'post_id' => $like->post_id,
+                        'liked_by' => auth()->id(),
+                    ],
+                ]);
+                DB::commit();
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Something went wrong' . $e->getMessage());
+        }
+    }
 
     public function render()
     {

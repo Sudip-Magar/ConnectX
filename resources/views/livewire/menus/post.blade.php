@@ -1,4 +1,4 @@
- <section class="flex-1 flex flex-col gap-6" x-data="post">
+ <section class="flex-1 flex flex-col gap-2" x-data="post">
 
      <!-- Post Creation Box -->
      <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4">

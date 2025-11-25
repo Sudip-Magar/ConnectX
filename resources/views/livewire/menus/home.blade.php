@@ -3,7 +3,7 @@
 
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 mt-6 px-4">
+    <main class="max-w-[85%] mx-auto flex flex-col md:flex-row gap-6 pt-3 px-4">
 
         <!-- Left Sidebar -->
         <aside class="hidden md:flex flex-col gap-4 w-1/4">
