@@ -1,12 +1,21 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('header', () => ({
-        show: false,
+        dropdownOpen: false,
+        mobileOpen: false,
         showToggle(){
-            this.show = !this.show;
+            this.dropdownOpen = !this.dropdownOpen;
         },
 
         showFalse(){
-            this.show = false;
+            this.dropdownOpen = false;
+        },
+
+        mobileOpenToggle(){
+            this.mobileOpen = !this.mobileOpen
+        },
+
+        mobileOpenFalse(){
+            this.mobileOpen = false;
         },
 
     }))

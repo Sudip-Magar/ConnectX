@@ -15,7 +15,9 @@
     <div ">
         <livewire:menus.header/>
     </div>
-    {{ $slot }}
+   <div class="bg-gray-100">
+     {{ $slot }}
+   </div>
 </body>
 
 </html>
