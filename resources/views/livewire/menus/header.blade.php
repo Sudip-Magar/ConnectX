@@ -1,7 +1,7 @@
 <div class="bg-linear-to-br from-blue-500 via-purple-600 to-indigo-700" x-data="header">
     <div class="w-[90%] mx-auto py-3 text-white flex justify-between items-center">
         <!-- Logo -->
-        <a href=""
+        <a href="{{ route('home') }}"
             class="logo font-bold text-3xl hover:text-transparent bg-clip-text hover:bg-linear-to-r hover:from-red-500 hover:to-green-700 transition duration-300">
             ConnectX
         </a>
@@ -9,7 +9,7 @@
         <!-- Desktop Menu -->
         <ul class="hidden md:flex gap-8 items-center text-2xl">
             <li>
-                <a href=""
+                <a href="{{ route('home') }}"
                     class="hover:text-transparent bg-clip-text hover:bg-linear-to-r hover:from-red-500 hover:to-green-700 transition duration-300">
                     <i class="fa-solid fa-house"></i>
                 </a>
@@ -36,34 +36,39 @@
 
         <!-- Right side icons -->
         <ul class="hidden md:flex items-center gap-4">
-            <li @click.prevent="noticationToggle"
-                class="relative group text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 
+            <li
+                class="relative text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 
            hover:from-indigo-500 hover:via-blue-600 hover:to-purple-700 p-2 rounded-full 
-           transition duration-300 cursor-pointer">
+           transition duration-300">
 
-                <i class="fa-solid fa-bell text-white"></i>
+                <button @click.outside="if (notication) showFalse()" class="cursor-pointer" @click.prevent="noticationToggle">
+                    <i class="fa-solid fa-bell text-white"></i>
+                </button>
 
-                <!-- Dropdown -->
-                <div @click.outside="showFalse" x-show="notication" x-cloak x-transition
-                    class="absolute top-17 right-0 bg-gray-700 px-4 py-3 z-50 w-94 rounded-lg">
+
+                <div x-show="notication" x-cloak x-transition
+                    class="absolute top-17 right-0 bg-gray-300 px-4 py-3 z-50 w-94 rounded-lg">
 
                     <h3 class="font-semibold text-gray-700 mb-2">Notifications</h3>
-                    <livewire:menus.notification>
-                        <!-- See all -->
-                        <div class="text-center mt-2">
-                            <a href="#" class="text-blue-600 text-sm hover:underline">View all notifications</a>
-                        </div>
 
+                    <livewire:menus.notification />
+
+                    <div class="text-center mt-2">
+                        <a href="{{ route('notification') }}" class="text-blue-600 text-sm hover:underline">
+                            View all notifications
+                        </a>
+                    </div>
                 </div>
             </li>
 
 
+
             <!-- User dropdown -->
             <li class="relative">
-                <img @click.prevent="showToggle" class="w-10 h-10 rounded-full cursor-pointer"
+                <img @click.outside="if (dropdownOpen) dropdownOpenFalse()" @click.prevent="showToggle" class="w-10 h-10 rounded-full cursor-pointer"
                     src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
 
-                <div x-show="dropdownOpen" @click.outside="showFalse" x-cloak x-transition
+                <div x-show="dropdownOpen" x-cloak x-transition
                     class="absolute top-15 right-0 bg-purple-600 px-4 py-3 z-50 w-70 rounded-lg">
                     <ul class="space-y-3">
                         <li>
