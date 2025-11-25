@@ -36,10 +36,27 @@
 
         <!-- Right side icons -->
         <ul class="hidden md:flex items-center gap-4">
-            <li
-                class="text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 hover:from-indigo-500 hover:via-blue-600 hover:to-purple-700 p-2 rounded-full transition duration-300">
-                <a href=""><i class="fa-solid fa-bell"></i></a>
+            <li @click.prevent="noticationToggle"
+                class="relative group text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 
+           hover:from-indigo-500 hover:via-blue-600 hover:to-purple-700 p-2 rounded-full 
+           transition duration-300 cursor-pointer">
+
+                <i class="fa-solid fa-bell text-white"></i>
+
+                <!-- Dropdown -->
+                <div @click.outside="showFalse" x-show="notication" x-cloak x-transition
+                    class="absolute top-17 right-0 bg-gray-700 px-4 py-3 z-50 w-94 rounded-lg">
+
+                    <h3 class="font-semibold text-gray-700 mb-2">Notifications</h3>
+                    <livewire:menus.notification>
+                        <!-- See all -->
+                        <div class="text-center mt-2">
+                            <a href="#" class="text-blue-600 text-sm hover:underline">View all notifications</a>
+                        </div>
+
+                </div>
             </li>
+
 
             <!-- User dropdown -->
             <li class="relative">
@@ -70,7 +87,8 @@
         </ul>
 
         <!-- Mobile Hamburger -->
-        <button @click.prevent="mobileOpenToggle" class="md:hidden text-2xl focus:outline-none z-50 relative cursor-pointer">
+        <button @click.prevent="mobileOpenToggle"
+            class="md:hidden text-2xl focus:outline-none z-50 relative cursor-pointer">
             <i class="fa-solid fa-bars"></i>
         </button>
 
