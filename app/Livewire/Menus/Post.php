@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Menus;
 
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Media;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use App\Models\Post as modelPost;
 class Post extends Component
 {
     use WithFileUploads;
-    public $images, $content;
+    public $images, $content, $comment = [];
 
     public function createPost()
     {
@@ -40,27 +41,24 @@ class Post extends Component
         }
     }
 
-    public function likePost($id)
+    public function createComment($id)
     {
         DB::beginTransaction();
         try {
-            $userId = Auth::guard('web')->user()->id;
-            $like = Like::where('post_id', $id)->where('user_id', $userId)->first();
-            if ($like) {
-                $like->delete();
-                DB::commit();
-            } else {
-                Like::create([
-                    'user_id' => $userId,
-                    'post_id' => $id,
-                ]);
-                DB::commit();
-            }
+            Comment::create([
+                'user_id' => Auth::guard('web')->user()->id,
+                'post_id' => $id,
+                'content' => $this->comment[$id],
+            ]);
+            DB::commit();
+            $this->comment[$id]='';
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', 'Something went wrong' . $e->getMessage());
+            session()->flash('error', 'something went wrong');
         }
     }
+
+
     public function render()
     {
         return view('livewire.menus.post', [
