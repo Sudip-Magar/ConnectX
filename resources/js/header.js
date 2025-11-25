@@ -5,12 +5,14 @@ document.addEventListener('alpine:init', () => {
         notication: false,
         showToggle() {
             this.dropdownOpen = !this.dropdownOpen;
-            this.notication = false
+            console.log('object')
+        },
+
+        dropdownOpenFalse(){
+            this.dropdownOpen = false
         },
 
         showFalse() {
-            this.dropdownOpen = false;
-            this.mobileOpen = false;
             this.notication = false;
         },
 

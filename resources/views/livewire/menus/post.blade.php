@@ -22,7 +22,7 @@
              </div>
              <p>{{ $post->content }}</p>
              <img src="{{ asset('storage/' . $post->media->first()->media) }}" class="rounded-lg mt-2">
-             <div class="flex gap-4 mt-2 text-gray-600 border-t border-t-gray-300 pt-3">
+             <div class="flex justify-end gap-4 mt-2 text-gray-600 border-t border-t-gray-300 pt-3">
                  @php
                      $userLiked = $post->likes->where('user_id', Auth::id())->where('post_id', $post->id)->first();
                  @endphp
