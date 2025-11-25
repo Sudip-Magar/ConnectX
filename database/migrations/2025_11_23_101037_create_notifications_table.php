@@ -12,13 +12,17 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // receiver
+            $table->unsignedBigInteger('user_id');     // receiver
+            $table->unsignedBigInteger('by');          // actor (liked by / comment by)
             $table->string('type'); // follow, like, comment
-            $table->json('data'); // e.g., follower_id, post_id
+            $table->foreignId('post_id')->nullable()->constrained('posts')->cascadeOnDelete();
+            $table->foreignId('comment_id')->nullable()->constrained('comments')->cascadeOnDelete();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('by')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

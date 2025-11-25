@@ -15,7 +15,6 @@ use App\Models\Post as modelPost;
 class Post extends Component
 {
     use WithFileUploads;
-    use WithFileUploads;
     public $images, $content, $comment = [];
 
     public function createPost()
@@ -52,22 +51,22 @@ class Post extends Component
                 'post_id' => $id,
                 'content' => $this->comment[$id],
             ]);
-
+            $post = modelPost::where('id', $comment->post_id)->first();
+            // dd($post);
             Notification::create([
-                'user_id' => $comment->user_id,
+                'user_id' => $post->user_id,
                 'type' => 'comment',
-                'data' => [
-                    'post_id' => $id,
-                    'comment_id' => $comment->id,
-                    'commented_by' => Auth::guard('web')->user()->id
-                ],
+                'post_id' => $id,
+                'comment_id' => $comment->id,
+                'by' => Auth::guard('web')->user()->id
             ]);
 
             DB::commit();
             $this->comment[$id] = '';
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', 'something went wrong');
+            // session()->flash('error', 'something went wrong');
+            dd($e);
         }
     }
 
@@ -85,13 +84,13 @@ class Post extends Component
                     'user_id' => $userId,
                     'post_id' => $id,
                 ]);
+                $post = modelPost::where('id', $like->post_id)->first();
+
                 Notification::create([
-                    'user_id' => $like->user_id,
+                    'user_id' => $post->user_id,
                     'type' => 'like',
-                    'data' => [
-                        'post_id' => $like->post_id,
-                        'liked_by' => auth()->id(),
-                    ],
+                    'post_id' => $id,
+                    'by' => auth()->id(),
                 ]);
                 DB::commit();
             }

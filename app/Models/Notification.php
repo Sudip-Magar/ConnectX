@@ -9,15 +9,16 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'type', 'data', 'read_at'];
+    protected $fillable = ['user_id', 'type', 'post_id', 'comment_id', 'by', 'read_at'];
 
-    protected $casts = [
-        'data' => 'array',
-        'read_at' => 'datetime',
-    ];
 
-    public function user()
+    public function receiver()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function actor()
+    {
+        return $this->belongsTo(User::class, 'by');
     }
 }
