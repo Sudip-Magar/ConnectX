@@ -37,7 +37,7 @@
         <!-- Right side icons -->
         <ul class="hidden md:flex items-center gap-4">
             <li
-                class="relative group text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 
+                class="relative text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 
            hover:from-indigo-500 hover:via-blue-600 hover:to-purple-700 p-2 rounded-full 
            transition duration-300">
 

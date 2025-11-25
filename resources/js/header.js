@@ -5,7 +5,6 @@ document.addEventListener('alpine:init', () => {
         notication: false,
         showToggle() {
             this.dropdownOpen = !this.dropdownOpen;
-            console.log('object')
         },
 
         dropdownOpenFalse(){

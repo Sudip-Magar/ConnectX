@@ -1,7 +1,7 @@
-<div class="space-y-3 text-black">
+<div class="space-y-3 ">
     @forelse ($notifications as $notification)
         <a href=""
-            class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 transition border border-white/10 bg-gray-50">
+            class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 transition border border-white/10 bg-gray-50 text-black">
 
             <!-- Avatar -->
             <img src="{{ asset('storage/' . $notification->actor->profile_picture) }}"
@@ -29,6 +29,6 @@
             </div>
         </a>
     @empty
-        <div class="text-gray-300 text-center py-4">No Notification</div>
+        <div class="text-gray-500 text-center py-4 font-semibold text-2xl">No Notification</div>
     @endforelse
 </div>
