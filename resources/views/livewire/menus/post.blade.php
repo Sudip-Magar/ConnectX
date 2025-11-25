@@ -23,8 +23,8 @@
              <p>{{ $post->content }}</p>
              <img src="{{ asset('storage/' . $post->media->first()->media) }}" class="rounded-lg mt-2">
              <div class="flex gap-4 mt-2 text-gray-600 border-t pt-3">
-                 <button class="hover:text-blue-500 cursor-pointer"><i class="fa-solid fa-thumbs-up"></i> Like</button>
-                 <button class="hover:text-blue-500 cursor-pointer"><i class="fa-solid fa-comment"></i> Comment</button>
+                 <button wire:click='likePost({{ $post->id }})' class="hover:text-blue-500 {{ $post->likes->first() ? 'text-blue-500' : 'text-gray-600' }} cursor-pointer"><i class="fa-solid fa-thumbs-up"></i> {{{ $post->likes->first() ? 'Unlike' : 'Like'}}}({{ $post->likes->count() }})</button>
+                 <button class="hover:text-blue-500 cursor-pointer"><i class="fa-solid fa-comment"></i> Comment({{ $post->comments->count() }})</button>
                  <button class="hover:text-blue-500 cursor-pointer"><i class="fa-solid fa-share"></i> Share</button>
              </div>
          </div>
