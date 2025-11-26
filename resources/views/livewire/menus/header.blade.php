@@ -51,7 +51,7 @@
 
                     <h3 class="font-semibold text-gray-700 mb-2">Notifications</h3>
 
-                    <livewire:menus.notification />
+                    <livewire:menus.notification :limit="10" />
 
                     <div class="text-center mt-2">
                         <a href="{{ route('notification') }}" class="text-blue-600 text-sm hover:underline">
