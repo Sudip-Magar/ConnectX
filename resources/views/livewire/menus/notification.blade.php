@@ -4,8 +4,13 @@
             class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 transition border border-white/10 bg-gray-50 text-black">
 
             <!-- Avatar -->
-            <img src="{{ asset('storage/' . $notification->actor->profile_picture) }}"
-                class="w-10 h-10 rounded-full object-cover" />
+            @if ($notification->actor->profile_picture)
+                <img src="{{ asset('storage/' . $notification->actor->profile_picture) }}"
+                    class="w-10 h-10 rounded-full object-cover" />
+            @else
+                <button class="w-10 h-10 border rounded-full bg-gray-200 text-gray-500 text-2xl cursor-pointer"><i
+                        class="fa-solid fa-user"></i></button>
+            @endif
 
             <!-- Text -->
             <div class="flex-1">
@@ -20,6 +25,11 @@
                             {{ $notification->by == auth()->id() ? 'You' : $notification->actor->name }}
                         </span>
                         commented on your post
+                    @elseif($notification->type === 'follow')
+                        <span class="font-bold">
+                            {{ $notification->actor->name }}
+                        </span>
+                        Started following You
                     @endif
                 </p>
 
