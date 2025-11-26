@@ -26,20 +26,7 @@
         <aside class="hidden md:flex flex-col gap-4 w-1/4">
             <div class="bg-white rounded-lg p-4 shadow">
                 <h2 class="font-bold mb-2">People You May Know</h2>
-                <ul class="flex flex-col gap-2">
-                    <li class="flex items-center gap-2">
-                        <img src="{{ asset('storage/users/z1jg0OZjLbijjUl3kSlOD7niOXpPmXYEqxET2CUq.jpg') }}" class="w-8 h-8 rounded-full">
-                        <span>Jane Doe</span>
-                        <button
-                            class="ml-auto bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm">Connect</button>
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <img src="{{ asset('storage/users/455D4JKAJdTBRhrfF94hzuiACSEJ1ghuJZg4yRkM.jpg') }}" class="w-8 h-8 rounded-full">
-                        <span>Mark Smith</span>
-                        <button
-                            class="ml-auto bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm">Connect</button>
-                    </li>
-                </ul>
+                    <livewire:menus.people>
             </div>
         </aside>
     </main>

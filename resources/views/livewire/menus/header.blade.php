@@ -41,7 +41,8 @@
            hover:from-indigo-500 hover:via-blue-600 hover:to-purple-700 p-2 rounded-full 
            transition duration-300">
 
-                <button @click.outside="if (notication) showFalse()" class="cursor-pointer" @click.prevent="noticationToggle">
+                <button @click.outside="if (notication) showFalse()" class="cursor-pointer"
+                    @click.prevent="noticationToggle">
                     <i class="fa-solid fa-bell text-white"></i>
                 </button>
 
@@ -65,16 +66,30 @@
 
             <!-- User dropdown -->
             <li class="relative">
-                <img @click.outside="if (dropdownOpen) dropdownOpenFalse()" @click.prevent="showToggle" class="w-10 h-10 rounded-full cursor-pointer"
-                    src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
+                @if ($user->profile_picture)
+                    <img @click.outside="if (dropdownOpen) dropdownOpenFalse()" @click.prevent="showToggle"
+                        class="w-10 h-10 rounded-full cursor-pointer"
+                        src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
+                @else
+                    <button @click.outside="if (dropdownOpen) dropdownOpenFalse()" @click.prevent="showToggle"
+                        class="w-10 h-10 border rounded-full bg-gray-200 text-gray-500 text-2xl cursor-pointer"><i
+                            class="fa-solid fa-user"></i></button>
+                @endif
 
                 <div x-show="dropdownOpen" x-cloak x-transition
                     class="absolute top-15 right-0 bg-purple-600 px-4 py-3 z-50 w-70 rounded-lg">
                     <ul class="space-y-3">
                         <li>
                             <a class="flex items-center gap-3 border-b pb-2" href="">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
+                                @if ($user->profile_picture)
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
+                                @else
+                                    <button 
+                                        class="w-10 h-10 border rounded-full bg-gray-200 text-gray-500 text-2xl cursor-pointer"><i
+                                            class="fa-solid fa-user"></i></button>
+                                @endif
+
                                 <span>{{ $user->name }}</span>
                             </a>
                             <a class="bg-blue-600 hover:bg-blue-700 w-full block mt-2 text-center py-1 rounded-lg"

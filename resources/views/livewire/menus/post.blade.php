@@ -2,8 +2,13 @@
 
      <!-- Post Creation Box -->
      <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4">
-         <img class="w-15 h-15 object-cover rounded-full" src="{{ asset('storage/' . $user->profile_picture) }}"
-             alt="">
+         @if ($user->profile_picture)
+             <img class="w-15 h-15 object-cover rounded-full" src="{{ asset('storage/' . $user->profile_picture) }}"
+                 alt="">
+         @else
+             <button class="w-15 h-15 shrink-0 rounded-full bg-gray-200 text-gray-500 text-3xl cursor-pointer"><i
+                     class="fa-solid fa-user"></i></button>
+         @endif
          <div @click.prevent="showcreatePost"
              class="border w-full py-3 px-4 font-semibold text-gray-500 rounded-full cursor-pointer">
              <p>Start a Post</p>
@@ -14,14 +19,22 @@
      @foreach ($posts as $post)
          <div x-data="{ createComment: false, }" class="bg-white p-4 rounded-lg shadow flex flex-col gap-2">
              <div class="flex items-center gap-3 ">
-                 <img src="{{ asset('storage/' . $post->user->profile_picture) }}" class="w-10 h-10 rounded-full">
+                 @if ($post->user->profile_picture)
+                     <img src="{{ asset('storage/' . $post->user->profile_picture) }}" class="w-10 h-10 rounded-full">
+                 @else
+                     <button
+                         class="w-10 h-10 shrink-0 rounded-full bg-gray-200 text-gray-500 text-2xl cursor-pointer"><i
+                             class="fa-solid fa-user"></i></button>
+                 @endif
                  <div>
                      <a href="" class="font-bold hover:text-purple-600">{{ $post->user->name }}</a>
                      <p class="text-gray-500 text-sm">{{ $post->created_at->diffForHumans() }}</p>
                  </div>
              </div>
              <p>{{ $post->content }}</p>
-             <img src="{{ asset('storage/' . $post->media->first()->media) }}" class="rounded-lg mt-2">
+             @if ($post->media->isNotEmpty())
+                 <img src="{{ asset('storage/' . $post->media->first()->media) }}" class="rounded-lg mt-2">
+             @endif
              <div class="flex justify-end gap-4 mt-2 text-gray-600 border-t border-t-gray-300 pt-3">
                  @php
                      $userLiked = $post->likes->where('user_id', Auth::id())->where('post_id', $post->id)->first();
@@ -96,8 +109,14 @@
                  <!-- User Info + Input -->
                  <div class="flex gap-3">
                      <!-- Profile Image -->
-                     <img src="{{ asset('storage/' . $user->profile_picture) }}"
-                         class="w-10 h-10 rounded-full object-cover" alt="User">
+                     @if ($user->profile_picture)
+                         <img src="{{ asset('storage/' . $user->profile_picture) }}"
+                             class="w-10 h-10 rounded-full object-cover" alt="User">
+                     @else
+                         <button
+                             class="w-10 h-10 shrink-0 rounded-full bg-gray-200 text-gray-500 text-xl cursor-pointer"><i
+                                 class="fa-solid fa-user"></i></button>
+                     @endif
 
                      <!-- Textarea -->
                      <textarea placeholder="What's on your mind?" wire:model='content'
