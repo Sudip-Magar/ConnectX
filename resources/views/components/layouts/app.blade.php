@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div ">
+    <div class="relative">
         <livewire:menus.header/>
     </div>
    <div class="bg-gray-100 py-3">

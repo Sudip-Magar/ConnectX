@@ -1,5 +1,5 @@
-<div class="bg-linear-to-br from-blue-500 via-purple-600 to-indigo-700" x-data="header">
-    <div class="w-[90%] mx-auto py-3 text-white flex justify-between items-center">
+<div class="bg-linear-to-br from-blue-500 via-purple-600 to-indigo-700 sticky top-0 z-50" x-data="header">
+    <div class="w-[84%] mx-auto py-1 text-white flex justify-between items-center">
         <!-- Logo -->
         <a href="{{ route('home') }}"
             class="logo font-bold text-3xl hover:text-transparent bg-clip-text hover:bg-linear-to-r hover:from-red-500 hover:to-green-700 transition duration-300">
@@ -10,7 +10,7 @@
         <ul class="hidden md:flex gap-8 items-center text-2xl">
             <li>
                 <a href="{{ route('home') }}"
-                    class="hover:text-transparent bg-clip-text hover:bg-linear-to-r hover:from-red-500 hover:to-green-700 transition duration-300">
+                    class=" {{ request()->routeIs('home') ? 'text-green-500 ' : '' }}">
                     <i class="fa-solid fa-house"></i>
                 </a>
             </li>
@@ -21,29 +21,28 @@
                 </a>
             </li>
             <li>
-                <a href=""
-                    class="hover:text-transparent bg-clip-text hover:bg-linear-to-r hover:from-red-500 hover:to-green-700 transition duration-300">
+                <a href="{{ route('friends') }}"
+                    class="{{ request()->routeIs('friends') ? 'text-green-500' : '' }}">
                     <i class="fas fa-user-friends"></i>
                 </a>
             </li>
             <li>
                 <a href=""
-                    class="hover:text-transparent bg-clip-text hover:bg-linear-to-r hover:from-red-500 hover:to-green-700 transition duration-300">
+                    class="">
                     <i class="fa-solid fa-message"></i>
                 </a>
             </li>
         </ul>
 
         <!-- Right side icons -->
-        <ul class="hidden md:flex items-center gap-4">
+        <ul class="hidden md:flex items-center">
             <li
-                class="relative text-2xl bg-linear-to-br from-purple-500 via-indigo-600 to-blue-700 
-           hover:from-indigo-500 hover:via-blue-600 hover:to-purple-700 p-2 rounded-full 
-           transition duration-300">
+                class="relative text-lg  p-2 rounded-full 
+           transition duration-300 ">
 
-                <button @click.outside="if (notication) showFalse()" class="cursor-pointer"
+                <button @click.outside="if (notication) showFalse()" class="cursor-pointer w-9 h-9 bg-gray-300 rounded-full text-gray-600"
                     @click.prevent="noticationToggle">
-                    <i class="fa-solid fa-bell text-white"></i>
+                    <i class="fa-solid fa-bell "></i>
                 </button>
 
 
@@ -68,11 +67,11 @@
             <li class="relative">
                 @if ($user->profile_picture)
                     <img @click.outside="if (dropdownOpen) dropdownOpenFalse()" @click.prevent="showToggle"
-                        class="w-10 h-10 rounded-full cursor-pointer"
+                        class="w-9 h-9 rounded-full cursor-pointer"
                         src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
                 @else
                     <button @click.outside="if (dropdownOpen) dropdownOpenFalse()" @click.prevent="showToggle"
-                        class="w-10 h-10 border rounded-full bg-gray-200 text-gray-500 text-2xl cursor-pointer"><i
+                        class="w-9 h-9 border rounded-full bg-gray-200 text-gray-500 text-xl cursor-pointer"><i
                             class="fa-solid fa-user"></i></button>
                 @endif
 

@@ -57,8 +57,14 @@
 
              <div x-show="createComment" class="my-1" x-cloak>
                  <div class="flex gap-2 items-center">
-                     <img class="w-10 h-10 rounded-full" src="{{ asset('storage/' . $user->profile_picture) }}"
-                         alt="">
+                     @if ($user->profile_picture)
+                         <img class="w-10 h-10 rounded-full" src="{{ asset('storage/' . $user->profile_picture) }}"
+                             alt="">
+                     @else
+                         <span
+                             class="w-10 h-10 shrink-0 rounded-full bg-gray-200 text-gray-500 text-2xl flex justify-center items-center"><i
+                                 class="fa-solid fa-user"></i></span>
+                     @endif
 
                      <div class="border rounded-full w-full py-1 px-1 ps-3">
                          <form class="flex" wire:submit='createComment({{ $post->id }})'>

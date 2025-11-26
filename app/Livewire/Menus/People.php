@@ -40,15 +40,15 @@ class People extends Component
         $this->userId = Auth::guard('web')->user()->id;
         $authUser = User::find($this->userId);
 
-
         $people = User::where('id', '!=', $this->userId)->latest()->get();
 
         $people = $people->map(function ($user) use ($authUser) {
+
             $isFollow = $authUser->following->contains($user->id);
             $theyFollowMe = $authUser->followers->contains($user->id);
 
             if ($isFollow && $theyFollowMe) {
-                $user->follow_status = 'Conneted';
+                $user->follow_status = 'Connected';
             } elseif ($isFollow) {
                 $user->follow_status = 'Following';
             } elseif ($theyFollowMe) {
@@ -59,6 +59,9 @@ class People extends Component
 
             return $user;
         });
+
+        // ✅ Show only NOT connected users
+        $people = $people->filter(fn($user) => $user->follow_status !== 'Connected');
 
         return view('livewire.menus.people', [
             'users' => $people,
