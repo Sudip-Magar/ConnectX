@@ -1,4 +1,7 @@
 <div class="max-w-3xl mx-auto mt-10" x-data="post">
+    @php
+        $me = Auth::guard('web')->user()->id
+    @endphp
     <div class="bg-white rounded-xl shadow-md p-6">
         <!-- Profile Header -->
         <div class="flex items-center space-x-4">
@@ -22,14 +25,14 @@
                 <p class="text-gray-800 font-bold text-lg">{{ $user->posts->count() }}</p>
                 <p class="text-gray-500 text-sm">Posts</p>
             </div>
-            <div>
+            <a href="">
                 <p class="text-gray-800 font-bold text-lg">{{ $user->followers->count() }}</p>
                 <p class="text-gray-500 text-sm">Followers</p>
-            </div>
-            <div>
+            </a>
+            <a href="">
                 <p class="text-gray-800 font-bold text-lg">{{ $user->following->count() }}</p>
                 <p class="text-gray-500 text-sm">Following</p>
-            </div>
+            </a>
         </div>
 
         <!-- Bio Section -->
