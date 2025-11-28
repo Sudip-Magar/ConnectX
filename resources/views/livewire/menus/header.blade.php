@@ -79,7 +79,7 @@
                     class="absolute top-15 right-0 bg-purple-600 px-4 py-3 z-50 w-70 rounded-lg">
                     <ul class="space-y-3">
                         <li>
-                            <a class="flex items-center gap-3 border-b pb-2" href="">
+                            <a href="{{ route('user',['username' => $user->username]) }}" class="flex items-center gap-3 border-b pb-2" href="">
                                 @if ($user->profile_picture)
                                     <img class="w-10 h-10 rounded-full"
                                         src="{{ asset('storage/' . $user->profile_picture) }}" alt="">
@@ -91,7 +91,7 @@
 
                                 <span>{{ $user->name }}</span>
                             </a>
-                            <a class="bg-blue-600 hover:bg-blue-700 w-full block mt-2 text-center py-1 rounded-lg"
+                            <a href="{{ route('user',['username' => $user->username]) }}" class="bg-blue-600 hover:bg-blue-700 w-full block mt-2 text-center py-1 rounded-lg"
                                 href="">See Profile</a>
                         </li>
                         <li class="hover:bg-indigo-700 py-1 px-1.5 rounded-lg"><a href=""><i

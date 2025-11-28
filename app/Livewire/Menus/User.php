@@ -7,6 +7,7 @@ use App\Models\User as modelUser;
 
 class User extends Component
 {
+    public $comment= [];
     public $user;
     public function mount($username)
     {
